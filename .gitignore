@@ -7,3 +7,9 @@ CDN
 vendor/
 logs/
 .well-known/
+
+
+websocket-server/certificate.pem
+websocket-server/private-key.pem
+
+package-lock.json
