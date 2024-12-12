@@ -32,9 +32,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 $query = "SELECT forums.*, users.name AS creator_name, users.uid AS creator_id FROM forums 
           LEFT JOIN users ON forums.created_by = users.uid 
-          WHERE forum_id = '$forum_id'";
-$result = mysqli_query($link, $query);
-$forum = mysqli_fetch_assoc($result);
+          WHERE forum_id = ?";
+$stmt = mysqli_prepare($link, $query);
+
+if ($stmt) {
+    mysqli_stmt_bind_param($stmt, "i", $forum_id);
+
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $forum = mysqli_fetch_assoc($result);
+
+    mysqli_stmt_close($stmt);
+} else {
+    echo "Error: " . mysqli_error($link);
+}
 
 if (!$forum) {
     echo "Forum not found.";
@@ -64,10 +75,22 @@ if (!$forum) {
             <h2>Replies:</h2>
             <?php
             $replies_query = "SELECT forum_posts.*, users.name AS username, users.uid AS user_id FROM forum_posts 
-                            LEFT JOIN users ON forum_posts.created_by = users.uid 
-                            WHERE forum_posts.forum_id = '$forum_id' 
-                            ORDER BY forum_posts.created_at ASC";
-            $replies_result = mysqli_query($link, $replies_query);
+            LEFT JOIN users ON forum_posts.created_by = users.uid 
+            WHERE forum_posts.forum_id = ? 
+            ORDER BY forum_posts.created_at ASC";
+            $stmt = mysqli_prepare($link, $replies_query);
+
+            if ($stmt) {
+                mysqli_stmt_bind_param($stmt, "i", $forum_id);
+
+                mysqli_stmt_execute($stmt);
+                $replies_result = mysqli_stmt_get_result($stmt);
+
+                mysqli_stmt_close($stmt);
+            } else {
+                echo "Error: " . mysqli_error($link);
+            }
+
             if (mysqli_num_rows($replies_result) > 0) {
                 while ($reply = mysqli_fetch_assoc($replies_result)) {
                     $query = "SELECT type FROM forum_posts_votes WHERE post_id = ? AND uid = ?";
@@ -89,15 +112,22 @@ if (!$forum) {
                     if ($netVotes == NULL) {
                         $netVotes = "0";
                     }
-                    $pfp_query = "SELECT picture_dir FROM users WHERE uid = '" . $reply['user_id'] . "'";
-                    $pfp_result = mysqli_query($link, $pfp_query);
-                    if ($pfp_result && mysqli_num_rows($pfp_result) > 0) {
-                        $pfp_row = mysqli_fetch_assoc($pfp_result);
-                        if ($pfp_row['picture_dir'] != NULL) {
-                            $picture_dir = $pfp_row['picture_dir'];  
-                        }else {
+                    $pfp_query = "SELECT picture_dir FROM users WHERE uid = ?";
+                    $stmt = mysqli_prepare($link, $pfp_query);
+
+                    if ($stmt) {
+                        mysqli_stmt_bind_param($stmt, "i", $reply['user_id']);
+                        mysqli_stmt_execute($stmt);
+                        $pfp_result = mysqli_stmt_get_result($stmt);
+                        if ($pfp_result && mysqli_num_rows($pfp_result) > 0) {
+                            $pfp_row = mysqli_fetch_assoc($pfp_result);
+                            $picture_dir = $pfp_row['picture_dir'] ?? '/images/default-avatar.png';
+                        } else {
                             $picture_dir = '/images/default-avatar.png';
-                        } 
+                        }
+                        mysqli_stmt_close($stmt);
+                    } else {
+                        echo "Error: " . mysqli_error($link);
                     }
                     ?>
                     <div class="reply-item">
@@ -161,17 +191,25 @@ if (!$forum) {
 <?php
 if (isset($_GET['post_id'])) {
     $post_id = $_GET['post_id'];
-    $file_query = "SELECT file, file_name FROM forum_posts WHERE post_id = '$post_id'";
-    $file_result = mysqli_query($link, $file_query);
-    $file_row = mysqli_fetch_assoc($file_result);
+    $file_query = "SELECT file, file_name FROM forum_posts WHERE post_id = ?";
+    $stmt = mysqli_prepare($link, $file_query);
 
-    if ($file_row && $file_row['file']) {
-        header('Content-Type: application/octet-stream');
-        header('Content-Disposition: attachment; filename="' . $file_row['file_name'] . '"');
-        echo $file_row['file'];
-        exit;
+    if ($stmt) {
+        mysqli_stmt_bind_param($stmt, "i", $post_id);
+        mysqli_stmt_execute($stmt);
+        $file_result = mysqli_stmt_get_result($stmt);
+        $file_row = mysqli_fetch_assoc($file_result);
+        if ($file_row && $file_row['file']) {
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename="' . $file_row['file_name'] . '"');
+            echo $file_row['file'];
+            exit;
+        } else {
+            echo "File not found.";
+        }
+        mysqli_stmt_close($stmt);
     } else {
-        echo "File not found.";
+        echo "Error: " . mysqli_error($link);
     }
 }
 ?>

@@ -11,5 +11,8 @@ logs/
 
 websocket-server/certificate.pem
 websocket-server/private-key.pem
+websocket-server/server.js
+setup/config.php
 
 package-lock.json
+

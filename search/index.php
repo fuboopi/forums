@@ -1,21 +1,34 @@
 <?php
-// Include database connection
 include($_SERVER['DOCUMENT_ROOT'] . '/setup/config.php');
 include($_SERVER['DOCUMENT_ROOT'] . '/includes/header.php');
 
 if (isset($_GET['search'])) {
-    $searchTerm = mysqli_real_escape_string($link, $_GET['search']);
-    $searchType = isset($_GET['search_type']) ? $_GET['search_type'] : 'forums'; // Default to forums if no type is set
+    $searchTerm = $_GET['search'] ?? '';
+$searchType = $_GET['search_type'] ?? 'forums';
 
-    if ($searchType === 'forums') {
-        // Search in forums
-        $query = "SELECT * FROM forums WHERE name LIKE '%$searchTerm%' OR description LIKE '%$searchTerm%'";
+$query = "";
+if ($searchType === 'forums') {
+        $query = "SELECT * FROM forums WHERE name LIKE ? OR description LIKE ?";
     } else if ($searchType === 'users') {
-        // Search in users
-        $query = "SELECT * FROM users WHERE name LIKE '%$searchTerm%' OR bio LIKE '%$searchTerm%'";
+        $query = "SELECT * FROM users WHERE name LIKE ? OR bio LIKE ?";
     }
 
-    $result = mysqli_query($link, $query);
+    if ($query) {
+        $stmt = mysqli_prepare($link, $query);
+
+        if ($stmt) {
+            $likeTerm = '%' . $searchTerm . '%';
+            mysqli_stmt_bind_param($stmt, "ss", $likeTerm, $likeTerm);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+
+            mysqli_stmt_close($stmt);
+        } else {
+            echo "Error: " . mysqli_error($link);
+        }
+    } else {
+        echo "Invalid search type.";
+    }
 }
 ?>
 

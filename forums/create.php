@@ -15,19 +15,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $description = mysqli_real_escape_string($link, $_POST['description']);
     $created_by = $_SESSION['uid'];  
 
-    
-    $query = "INSERT INTO forums (name, description, created_by) VALUES ('$name', '$description', '$created_by')";
-    
-    if (mysqli_query($link, $query)) {
-        
-        $forumid = mysqli_insert_id($link);
-        
-        
-        header("Location: /forums/?forum_id=$forumid");
-        exit;  
+    $query = "INSERT INTO forums (name, description, created_by) VALUES (?, ?, ?)";
+    $stmt = mysqli_prepare($link, $query);
+
+    if ($stmt) {
+        mysqli_stmt_bind_param($stmt, "sss", $name, $description, $created_by);
+
+        if (mysqli_stmt_execute($stmt)) {
+            $forumid = mysqli_insert_id($link);
+
+            header("Location: /forums/?forum_id=$forumid");
+            exit;
+        } else {
+            echo "Error: " . mysqli_stmt_error($stmt);
+        }
+
+        mysqli_stmt_close($stmt);
     } else {
         echo "Error: " . mysqli_error($link);
     }
+
 }
 ?>
 

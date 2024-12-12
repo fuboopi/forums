@@ -2,7 +2,6 @@
 include($_SERVER['DOCUMENT_ROOT'] . '/setup/config.php');
 include($_SERVER['DOCUMENT_ROOT'] . '/includes/header.php');
 
-
 $sql = "SELECT * FROM forums ORDER BY created_at DESC LIMIT 2"; 
 $result = mysqli_query($link, $sql);
 $featured_topics = mysqli_fetch_all($result, MYSQLI_ASSOC);

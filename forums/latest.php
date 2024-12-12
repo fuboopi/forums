@@ -5,11 +5,19 @@ include($_SERVER['DOCUMENT_ROOT'] . '/includes/header.php');
 
 $query = "SELECT forums.*, users.name AS creator_name, users.uid AS creator_id FROM forums 
           LEFT JOIN users ON forums.created_by = users.uid 
-          ORDER BY created_at DESC LIMIT 5";
-$result = mysqli_query($link, $query);
-
-if (!$result) {
-    die("Query failed: " . mysqli_error($link));
+          ORDER BY created_at DESC LIMIT ?";
+$stmt = mysqli_prepare($link, $query);
+if ($stmt) {
+    $limit = 5;
+    mysqli_stmt_bind_param($stmt, "i", $limit);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    if (!$result) {
+        die("Query failed: " . mysqli_error($link));
+    }
+    mysqli_stmt_close($stmt);
+} else {
+    echo "Error: " . mysqli_error($link);
 }
 ?>
 
