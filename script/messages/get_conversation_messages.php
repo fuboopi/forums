@@ -2,8 +2,6 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-
-session_start();
 include($_SERVER['DOCUMENT_ROOT'] . '/setup/config.php');
 
 $conversationId = $_GET['conversationId'] ?? null;

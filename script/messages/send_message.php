@@ -1,5 +1,4 @@
 <?php
-session_start();
 include($_SERVER['DOCUMENT_ROOT'] . '/setup/config.php');
 
 if (!isset($_SESSION['uid'])) {
@@ -10,7 +9,6 @@ if (!isset($_SESSION['uid'])) {
 $conversationId = isset($_POST['conversationId']) ? intval($_POST['conversationId']) : 0;
 $message = isset($_POST['message']) ? trim($_POST['message']) : '';
 
-// Check if conversation exists and user is part of it
 $sql = "SELECT * FROM conversations WHERE conversation_id = ? AND (user_1_id = ? OR user_2_id = ?)";
 $stmt = $link->prepare($sql);
 $stmt->bind_param("iii", $conversationId, $_SESSION['uid'], $_SESSION['uid']);
@@ -22,7 +20,6 @@ if ($result->num_rows === 0) {
     exit();
 }
 
-// Insert the message into the database
 $sql = "INSERT INTO messages (conversation_id, sender_id, message, created_at) VALUES (?, ?, ?, NOW())";
 $stmt = $link->prepare($sql);
 $stmt->bind_param("iis", $conversationId, $_SESSION['uid'], $message);
@@ -34,7 +31,6 @@ if ($stmt->affected_rows > 0) {
     echo json_encode(['success' => false, 'message' => 'Failed to send message']);
 }
 
-// Broadcast the message to WebSocket clients
 if (isset($wsServer)) {
     $messageData = [
         'type' => 'message',
@@ -42,6 +38,6 @@ if (isset($wsServer)) {
         'message' => $message,
         'timestamp' => date('Y-m-d H:i:s')
     ];
-    $wsServer->broadcast(json_encode($messageData));  // Send to all connected clients
+    $wsServer->broadcast(json_encode($messageData)); 
 }
 ?>

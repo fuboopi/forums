@@ -1,5 +1,4 @@
 <?php
-session_start();
 include($_SERVER['DOCUMENT_ROOT'] . '/setup/config.php');
 header('Content-Type: application/json');  
 

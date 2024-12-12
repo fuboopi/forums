@@ -1,5 +1,4 @@
 <?php
-session_start();
 include($_SERVER['DOCUMENT_ROOT'] . '/setup/config.php');
 
 if (!isset($_SESSION['uid'])) {
@@ -10,7 +9,6 @@ if (!isset($_SESSION['uid'])) {
 $userId = $_SESSION['uid'];
 $otherUserId = $_GET['otherUserId'];
 
-// Fetch messages between the logged-in user and the selected user
 $sql = "SELECT * FROM messages 
         WHERE (sender_id = ? AND receiver_id = ?) 
         OR (sender_id = ? AND receiver_id = ?) 

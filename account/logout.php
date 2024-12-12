@@ -1,14 +1,10 @@
 <?php
 
 include($_SERVER['DOCUMENT_ROOT'] . '/setup/config.php');
-// Start the session to access session variables
-
-// Destroy all session variables
 
 setcookie('remember_me', '', time() - 3600, '/');
 
 if (isset($_GET['force']) && $_GET['force'] == "1") {
-    // Clear remember_token
     $token = NULL;
     $update_query = "UPDATE users SET remember_token = ? WHERE uid = ?";
     $stmt = $link->prepare($update_query);
