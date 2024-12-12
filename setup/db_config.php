@@ -1,8 +1,8 @@
 <?php
 return [
     'server' => 'localhost',
-    'username' => 'forums',
-    'password' => 'Marksclub_2005',
-    'name' => 'forums',
+    'username' => 'username',
+    'password' => 'password',
+    'name' => 'database_name',
 ];
 ?>
