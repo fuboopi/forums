@@ -3,6 +3,6 @@
 script/cropperjs/
 fonts/fontawesome/
 node_modules/
-CDN/
+CDN
 vendor/
 logs/
