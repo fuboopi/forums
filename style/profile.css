@@ -1,0 +1,234 @@
+.profile-card {
+    width: 100%;
+    z-index: 2;
+    position: relative;
+}
+
+.profile-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--secondary-color);
+    background-color: var(--background-color);
+    border-radius: 8px;
+    margin-top: 20px;
+    width: 75%;
+    max-width: 900px;
+    margin: 20px auto;
+}
+
+.username::after {
+    position: relative;
+}
+
+.profile-container h1 {
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+
+
+.profile-container .bio {
+    max-width: 800px;
+}
+
+.profile-container .btn,
+.profile-container button {
+    display: inline-block;
+    padding: var(--btn-padding, 10px 20px);
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    text-decoration: none;
+    border-radius: var(--btn-border-radius, 4px);
+    font-size: var(--btn-font-size, 16px);
+    text-align: center;
+    cursor: pointer;
+}
+
+.profile-container .btn:hover,
+.profile-container button:hover {
+    background-color: var(--hover-color);
+}
+
+.profile-container .btn.secondary,
+.profile-container button.secondary {
+    background-color: var(--secondary-color);
+}
+
+.profile-container .btn.secondary:hover,
+.profile-container button.secondary:hover {
+    background-color: var(--hover-color);
+}
+
+.profile-container form {
+    width: 100%;
+    max-width: 600px;
+    margin-top: 20px;
+    padding: 20px;
+    background-color: var(--secondary-color);
+    border: 1px solid var(--secondary-color);
+    border-radius: 8px;
+}
+
+.profile-container form::before {
+    overflow: visible !important;
+}
+
+.profile-container .form-group {
+    margin-bottom: 15px;
+}
+
+.profile-container .form-group label {
+    font-size: 16px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.profile-container .form-group input,
+.profile-container .form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--secondary-color);
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.profile-container .form-group textarea {
+    resize: vertical;
+    height: 100px;
+}
+
+.profile-container .form-group input[type="file"] {
+    padding: 5px;
+}
+
+.profile-container button {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    padding: var(--btn-padding, 10px 20px);
+    border: none;
+    border-radius: var(--btn-border-radius, 4px);
+    cursor: pointer;
+    font-size: var(--btn-font-size, 16px);
+}
+
+.profile-container button:hover {
+    background-color: var(--hover-color);
+}
+
+.profile-container .btn.secondary {
+    background-color: var(--secondary-color);
+}
+
+.profile-container .btn.secondary:hover {
+    background-color: var(--hover-color);
+}
+
+
+.form-group-checkbox {
+    display: flex;
+    align-items: center;
+}
+
+.inline-label {
+    margin-right: 10px;
+}
+
+.profile-header {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.profile-picture {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 10px solid var(--background-color);
+    object-fit: cover;
+    margin: -75px 20px 20px 20px;
+    position: relative;
+}
+
+.profile-info p {
+    margin: 0 auto 10px 10px;
+    text-align: left;
+}
+
+.profile-header .profile-info {
+    width: 100%;
+    padding: 0 20px;
+    background: none;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.email {
+    filter: blur(5px);
+    transition: ease 0.25s;
+}
+.email:hover {
+    filter: blur(0);
+}
+
+.profile-stats {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 0 10px;
+}
+
+.profile-stats p {
+    margin: 0 !important;
+    font-size: 10pt;
+}
+
+.banner {
+    background: var(--secondary-color);
+    width: 100%;
+    height: 200px;
+    z-index: 0;
+    border-radius: 8px 8px 0 0;
+    background-size: cover;
+    background-position: center;
+}
+@media only screen and (max-width: 768px){
+    /* Mobile-specific styles */
+    .profile-header{
+        flex-direction: column;
+        padding: 0px;
+    }
+    .profile-container {
+        margin: 0 auto;
+        padding: 0px;
+        border: 0px solid var(--secondary-color);
+        width: 100%;
+    }
+    .profile-container form{
+        padding: 0;
+        margin: 0;
+        background: none;
+        border: none;
+    }
+    .profile-header .profile-info {
+        width: 100%;
+        padding: 0;
+        background: none;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .banner{
+        border-radius: 0;
+    }
+    .profile-picture {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .username {
+        margin: 0 auto;
+    }
+}

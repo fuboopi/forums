@@ -1,0 +1,25 @@
+.form-group {
+    width: 100%;
+}
+
+.search-btn {
+    text-align: center;
+}
+
+.search-itms {
+    text-align: center;
+}
+
+#search_form {
+    width: 100%;
+}
+
+.search-item{
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: var(--background-color);
+    box-sizing: border-box;
+    border-top: 3px solid var(--primary-color);
+    display: block;
+    width: 100%;
+}

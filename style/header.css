@@ -1,0 +1,269 @@
+.navbar {
+    background-color: var(--primary-color);
+    overflow: hidden;
+    display: flex;
+    min-height: 50px;
+}
+
+.navbar a {
+    float: left;
+    display: block;
+    color: var(--secondary-color);
+    padding: 14px 20px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.navbar a:hover {
+    background-color: var(--secondary-color);
+    color: black;
+}
+
+.navbar-right {
+    display: flex;
+    right: 0;
+    position: absolute;
+}
+
+.login-register-btn {
+    float: right !important;
+    background-color: var(--primary-color);
+    padding: 10px 20px;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    margin-left: 10px;
+}
+
+.login-register-btn:hover {
+    background-color: var(--secondary-color);
+}
+
+
+/* Style for dropdown button */
+.dropdown {
+    display:block;
+}
+
+.dropdown .dropbtn {
+    min-width: 160px;
+    max-width: 160px;
+    font-size: 16px;
+    border: none;
+    outline: none;
+    color: var(--secondary-color);
+    padding: 14px 20px;
+    background-color: inherit;
+    font-family: inherit;
+    margin: 0;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: var(--secondary-color);
+    color: black;
+}
+
+/* Dropdown container that holds the links */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: var(--primary-color);
+    min-width: 160px;    /* Base width for dropdown */
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+    right: 0;            /* Align dropdown content to the right of the button */
+    text-align: left;     /* Align text inside links to the left */
+}
+
+/* Style for links inside the dropdown */
+.dropdown-content a {
+    min-width: 160px;
+    max-width: 160px;
+    color: var(--secondary-color);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;      /* Stack links vertically */
+}
+
+
+/* Hover effect for the links */
+.dropdown-content a:hover {
+    background-color: var(--secondary-color);
+    color: black;
+}
+
+/* Show the dropdown content when hovering over the button */
+.dropdown:hover .dropdown-content {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.header-buttons {
+    float: right;
+    margin-right: 20px;
+}
+
+.header-buttons a {
+    background-color: var(--primary-color);
+    padding: 10px 20px;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    margin-left: 10px;
+}
+
+.header-buttons a:hover {
+    background-color: var(--secondary-color);
+}
+
+
+/* Footer styles */
+
+footer {
+    background-color: var(--primary-color);
+    padding: 20px;
+    position: relative;
+    bottom: 0px;
+}
+
+footer .navbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+footer .navbar a {
+    color: var(--secondary-color);
+    padding: 14px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+}
+
+footer .navbar a:hover {
+    background-color: var(--secondary-color);
+    color: black;
+}
+
+footer .login-register-btn {
+    background-color: var(--primary-color);
+    padding: 10px 20px;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    margin-left: 10px;
+}
+
+footer .login-register-btn:hover {
+    background-color: var(--secondary-color);
+}
+
+/* Style for dropdown in footer */
+footer .dropdown {
+    position: absolute;
+    right: 0;
+}
+
+footer .dropdown .dropbtn {
+    min-width: 160px;
+    max-width: 160px;
+    font-size: 16px;
+    border: none;
+    outline: none;
+    color: var(--secondary-color);
+    padding: 14px 20px;
+    background-color: inherit;
+    font-family: inherit;
+    margin: 0;
+}
+
+footer .dropdown:hover .dropbtn {
+    background-color: var(--secondary-color);
+    color: black;
+}
+
+/* Dropdown container for footer */
+footer .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: var(--primary-color);
+    min-width: 160px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    right: 0;
+    text-align: left;
+}
+
+/* Links inside footer dropdown */
+footer .dropdown-content a {
+    min-width: 160px;
+    max-width: 160px;
+    color: var(--secondary-color);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Hover effect for dropdown links in footer */
+footer .dropdown-content a:hover {
+    background-color: var(--secondary-color);
+    color: black;
+}
+
+/* Show the dropdown content when hovering over the button in footer */
+footer .dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.footer-buttons {
+    float: right;
+    margin-right: 20px;
+}
+
+.footer-buttons a {
+    background-color: var(--primary-color);
+    padding: 10px 20px;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    margin-left: 10px;
+}
+
+.footer-buttons a:hover {
+    background-color: var(--secondary-color);
+}
+
+.dropbtn {
+    display: block;
+}
+.dropbtn-mobile {
+    display: none;
+    height: 50px;
+    color: var(--secondary-color);
+    font-size: 14pt;
+}
+
+.mobile-only {
+    display: none !important;
+}
+
+.fa-regular {
+    position: relative;
+    top: 15%;
+}
+
+@media only screen and (max-width: 768px) {
+    .navbar-link {
+        display: none !important;
+    }
+    .dropbtn {
+        display:none;
+    }
+    .dropbtn-mobile {
+        display:block ;
+    }
+    .mobile-only {
+        display: block !important;
+    }
+}
