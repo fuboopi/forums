@@ -1,2 +1,8 @@
-script/cropperjs
-fonts/fontawesome
+# Untracked files:
+
+script/cropperjs/
+fonts/fontawesome/
+node_modules/
+CDN/
+vendor/
+logs/
