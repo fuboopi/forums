@@ -11,6 +11,8 @@ A messy, but functioning (hopefully) forums site
         - [Nginx](#nginx)
         - [Apache](#apache)
     - [Database setup](#database-setup)
+        - [Creating a user](#creating-a-user)
+        - [Creating the database](#creating-the-database)
     - [Setting up configuration files](#setting-up-configuration-files)
         - [config.php](#configphp)
         - [db_config.php](#db_configphp)
@@ -21,7 +23,7 @@ A messy, but functioning (hopefully) forums site
 - [] Finish DMs
 - [] Notifications/Recent Activity Page
 - [] Expand on search functionality
-- [] i will think of more things :3
+- [] Finish this readme
 
 ### Requirements:
 - Nginx, Apache, etc...
@@ -94,6 +96,25 @@ server {
 ```
 
 ### Database setup
+It's recommended to create a dedicated MySQL user just to limit privileges. 
+
+#### Creating a user
+Login to your MySQL shell and create a new user.
+```sql
+CREATE USER 'forums'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
+GRANT CREATE, ALTER, DROP, INSERT, UPDATE, DELETE, SELECT, REFERENCES ON forums.* TO 'forums'@'localhost';
+```
+Log back out with `exit;` to return to your shell.
+
+
+#### Creating the database
+Making sure your current working directory is still the root of the project, create the new database.
+```sh
+$ mysql -u forums -pPassword forums < setup/database.sql
+```
+#### Note
+> There should be no space between `-p` and your password.
+
 
 ### Setting up configuration files
 Two main files that will have to be setup are in the `setup/` directory, `config.php` and `db_config.php`.
@@ -124,7 +145,7 @@ $token_name = 'remember_me';
 
 
 #### db_config.php
-`db_config.php` contains the credentials required to connect to your MySQL database. It's recommended to create a dedicated MySQL user just to limit privileges.
+`db_config.php` contains the credentials required to connect to your MySQL database.
 ```php
 return [
     'server' => 'localhost',
