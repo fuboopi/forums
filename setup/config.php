@@ -10,12 +10,12 @@ define("DB_PASSWORD", $dbConfig['password']);
 define("DB_NAME", $dbConfig['name']);
 
 // Variables
-$site = "https://forums.fuboopi.com";
-$site_name = "fuboopi";
+$site = "https://example.com";
+$site_name = "forum site";
 
 define("ROOTPATH", __DIR__);
 $cdnDIR = '/CDN/forums';
-$cdn = "https://cdn.fuboopi.com/forums";
+$cdn = "https://cdn.example.com/forums";
 
 // Variables that most likely don't need to be changed.
 $token_name = 'remember_me';
