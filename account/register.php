@@ -66,7 +66,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <title>Register | <?php echo $site_name?></title>
     <link rel="stylesheet" href="<?php echo $stylesheet ?>">
-    <link rel="stylesheet" href="/style/header.css">
 </head>
 <body>
 <form method="POST" action="register.php" class='container'>

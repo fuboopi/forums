@@ -39,7 +39,6 @@ if ($searchType === 'forums') {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Search | <?php echo $site_name ?></title>
         <link rel="stylesheet" href="<?php echo $stylesheet; ?>">
-        <link rel="stylesheet" href="/style/header.css">
         <link rel="stylesheet" href="/style/forums.css">
         <link rel="stylesheet" href="/style/search.css">
         <script src="/script/search/search.js"></script>

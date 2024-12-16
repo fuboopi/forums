@@ -69,7 +69,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <title>Login | <?php echo $site_name?></title>
     <link rel="stylesheet" href="<?php echo $stylesheet ?>">
-    <link rel="stylesheet" href="/style/header.css">
 </head>
 <body>
 

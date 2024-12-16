@@ -2,71 +2,34 @@
 include($_SERVER['DOCUMENT_ROOT'] . '/setup/config.php');
 include($_SERVER['DOCUMENT_ROOT'] . '/includes/header.php');
 
+$profile_uid = isset($_GET['uid']) && is_numeric($_GET['uid']) ? $_GET['uid'] : $_SESSION['uid'];
 
-
-if (isset($_GET['uid']) && is_numeric($_GET['uid'])) {
-    
-    $profile_uid = $_GET['uid'];
-} else {
-    
-    $profile_uid = $_SESSION['uid'];
-}
-
-
-$query = "SELECT * FROM users WHERE uid = ? LIMIT 1";
+$query = "
+    SELECT u.*, 
+           (SELECT COUNT(*) FROM forum_posts WHERE created_by = u.uid) AS post_count,
+           (SELECT COUNT(*) FROM forums WHERE created_by = u.uid) AS forum_count
+    FROM users u
+    WHERE u.uid = ?
+    LIMIT 1
+";
 $stmt = $link->prepare($query);
 $stmt->bind_param("i", $profile_uid);
 $stmt->execute();
-$result = $stmt->get_result();
+$user = $stmt->get_result()->fetch_assoc();
 
-
-if ($result->num_rows > 0) {
-    $user = $result->fetch_assoc();
-} else {
+if (!$user) {
     echo "<p>User not found!</p>";
     exit();
 }
-
-
-if ($user['picture_dir'] != NULL) {
-    $profile_picture = $user['picture_dir'];
-} elseif ($user['picture']) {
-    $profile_picture = 'data:image/jpeg;base64,' . base64_encode($user['picture']);
-} else {
-    $profile_picture = '/images/default-avatar.png';  
-}
-
-
-if ($user['banner_dir'] != NULL) {
-    $banner_picture = $user['banner_dir'];
-} else {
-    $banner_picture = '/images/default-avatar.png';  
-}
-
+$profile_picture = $user['picture_dir'] ?? ($user['picture'] ? 'data:image/jpeg;base64,' . base64_encode($user['picture']) : '/images/default-avatar.png');
+$banner_picture = $user['banner_dir'] ?? '/images/default-avatar.png';
+$join_date = date('F d, Y', strtotime($user['joined_on']));
 
 $query_posts = "SELECT * FROM forum_posts WHERE created_by = ? ORDER BY created_at DESC LIMIT 5";
 $stmt_posts = $link->prepare($query_posts);
-$stmt_posts->bind_param("i", $_GET['uid']);
+$stmt_posts->bind_param("i", $profile_uid);
 $stmt_posts->execute();
 $recent_posts = $stmt_posts->get_result();
-
-
-$join_date = date('F d, Y', strtotime($user['joined_on']));
-    
-$query = "SELECT COUNT(*) AS post_count FROM forum_posts WHERE created_by = ?";
-$stmt = $link->prepare($query);
-$stmt->bind_param("i", $profile_uid);
-$stmt->execute();
-$post_count = $stmt->get_result()->fetch_assoc();
-$post_count = $post_count['post_count'];
-    
-$query = "SELECT COUNT(*) AS forum_count FROM forums WHERE created_by = ?";
-$stmt = $link->prepare($query);
-$stmt->bind_param("i", $profile_uid);
-$stmt->execute();
-$forum_count = $stmt->get_result()->fetch_assoc();
-$forum_count = $forum_count['forum_count'];
-
 ?>
 
 <!DOCTYPE html>
@@ -75,7 +38,6 @@ $forum_count = $forum_count['forum_count'];
     <meta charset="UTF-8">
     <title><?php echo htmlspecialchars($user['name']); ?> | Profile</title>
     <link rel="stylesheet" href="<?php echo $stylesheet ?>">
-    <link rel="stylesheet" href="/style/header.css">
     <link rel="stylesheet" href="/style/profile.css">
 </head>
 <body>
@@ -92,9 +54,8 @@ $forum_count = $forum_count['forum_count'];
             <div class="profile-info">
                     <p><?php echo htmlspecialchars($user['bio']); ?></p>
                     <div class="profile-stats">
-                        <p class='email'><strong>Email:</strong> <?php echo htmlspecialchars($user['email']); ?></p>
                         <p><strong>Joined:</strong> <?php echo $join_date; ?></p>
-                        <p><strong>Forums:</strong> <?php echo $forum_count;?> | <strong>Posts:</strong> <?php echo $post_count; ?></p>
+                        <p><strong>Forums:</strong> <?php echo $user['forum_count'];?> | <strong>Posts:</strong> <?php echo $user['post_count']; ?></p>
                         <?php if ($user['email_visible'] == 1): ?>
                     <?php endif; ?>
                 </div>

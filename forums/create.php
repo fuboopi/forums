@@ -45,7 +45,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Forum | <?php echo $site_name?></title>
     <link rel="stylesheet" href="<?php echo $stylesheet ?>">
-    <link rel="stylesheet" href="/style/header.css">
 </head>
 <body>
     <div class='container'>

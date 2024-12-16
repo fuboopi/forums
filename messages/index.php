@@ -49,7 +49,6 @@ while ($row = $result->fetch_assoc()) {
     <title>Direct Messages | <?php echo $site_name?></title>
     <link rel="stylesheet" href="<?php echo $stylesheet; ?>">
     <link rel="stylesheet" href="/style/messages.css"> 
-    <link rel="stylesheet" href="/style/header.css">
 
     <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
 </head>

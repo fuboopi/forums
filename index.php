@@ -13,7 +13,6 @@ $featured_topics = mysqli_fetch_all($result, MYSQLI_ASSOC);
     <meta charset="UTF-8">
     <title>Home | <?php echo htmlspecialchars($site_name); ?></title>
     <link rel="stylesheet" href="<?php echo $stylesheet ?>">
-    <link rel="stylesheet" href="/style/header.css">
 </head>
 <body>
     <!-- Main -->

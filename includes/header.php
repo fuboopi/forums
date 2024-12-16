@@ -1,7 +1,7 @@
 <html>
     <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <link rel="stylesheet" href="/style/header.css">
   <link href="/fonts/fontawesome/css/fontawesome.css" rel="stylesheet" />
   <link href="/fonts/fontawesome/css/brands.css" rel="stylesheet" />
   <link href="/fonts/fontawesome/css/solid.css" rel="stylesheet" />
@@ -15,7 +15,8 @@
         <a href="/messages" class='navbar-link'><i class="fa-regular fa-message"></i></a>
 
         <div class="navbar-right">
-            <a href="/search"><i class="fa-regular fa-magnifying-glass"></i></a>
+        <a href="/search"><i class="fa-regular fa-magnifying-glass"></i></a>
+        <!--<a href="/account/notifications" class='navbar-link'><i class="fa-regular fa-bell"></i></a>!-->
             <?php if (isset($_SESSION['name'])): ?>
                 <div class="dropdown">
                     <button class="dropbtn-mobile"><i class="fa-solid fa-bars"></i></button>
@@ -24,6 +25,7 @@
                         <a href="/account/profile">My Profile</a>
                         <a href="/forums/latest" class='mobile-only'>Forums</a>
                         <a href="/messages" class='mobile-only'>Messages</a>
+                        <!--<a href="/account/notifications" class='mobile-only'>Notifications</a>!-->
                         <a href="/account/logout">Logout</a>
                     </div>
                 </div>

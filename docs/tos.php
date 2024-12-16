@@ -9,7 +9,6 @@ include($_SERVER['DOCUMENT_ROOT'] . '/includes/header.php');
     <meta charset="UTF-8">
     <title>Home | <?php echo htmlspecialchars($site_name); ?></title>
     <link rel="stylesheet" href="<?php echo $stylesheet ?>">
-    <link rel="stylesheet" href="/style/header.css">
 </head>
 <body>
 <h1>Terms of Service</h1>

@@ -14,8 +14,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo "You need to log in to post a reply.";
         exit;
     }
-    
     $reply_content = mysqli_real_escape_string($link, $_POST['content']);
+    $reply_content = str_replace('\r\n', '\n', $reply_content);
     $created_by = $_SESSION['uid'];
 
     include($_SERVER['DOCUMENT_ROOT'] . '/script/forums/post_upload_file.php');
@@ -60,9 +60,9 @@ if (!$forum) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forum: <?php echo htmlspecialchars($forum['name']); ?> | <?php echo $site_name?></title>
     <link rel="stylesheet" href="<?php echo $stylesheet; ?>">
-    <link rel="stylesheet" href="/style/header.css">
     <link rel="stylesheet" href="/style/forums.css">
     <script src='/script/forums/vote.js'></script>
+    <script src='/script/forums/post_options.js'></script>
 </head>
 <body>
 
@@ -139,12 +139,17 @@ if (!$forum) {
                             <br>
                             <p><small><?php echo date("m/d/y h:iA", strtotime($reply['created_at'])); ?></small></p>
                             <div class='bottom'>
-                                <a class='delete-post' id='<?php echo $reply['post_id'];?>'><i class="fa-solid fa-trash"></i></a>
-                                <a class='edit-post' id='<?php echo $reply['post_id'];?>'><i class="fa-solid fa-pen-to-square"></i></a>
+                                <?php if ($reply['user_id'] == $_SESSION['uid']): ?>
+                                <a class='delete-post' id='delete-<?php echo $reply['post_id'];?>'><i class="fa-solid fa-trash"></i></a>
+                                <a class='edit-post' id='edit-<?php echo $reply['post_id'];?>'><i class="fa-solid fa-pen-to-square"></i></a>
+                                <?php endif;?>
                             </div>
                         </div>
                         <div class='main'>
-                            <p class='reply-content'><?php echo nl2br(htmlspecialchars($reply['content'])); ?></p>
+                            <?php
+                            $formatted = nl2br(stripcslashes($reply['content']));
+                            ?>
+                            <p class='reply-content'><?php echo $formatted; ?></p>
                             <?php include($_SERVER['DOCUMENT_ROOT'] . '/includes/replies_file.php'); ?>
                         </div>
                         <div class='right'>

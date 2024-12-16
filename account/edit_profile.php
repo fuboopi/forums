@@ -59,11 +59,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <title>Edit Profile</title>
     <link rel="stylesheet" href="<?php echo $stylesheet ?>">
-    <link rel="stylesheet" href="/style/header.css">
     <link rel="stylesheet" href="/style/profile.css">
-    <link  href="/script/cropperjs/cropper.css" rel="stylesheet">
-    <script src="/script/cropperjs/cropper.js"></script>
-    <script src="/script/upload_profile_picture.js"></script>
+    <link  href="/node_modules/cropperjs/dist/cropper.css" rel="stylesheet">
+    <script src="/node_modules/cropperjs/dist/cropper.js"></script>
+    <script src="/script/account/upload_profile_picture.js"></script>
+    <script src="/script/account/verify_email_button.js"></script>
+    
 </head>
 <body>
 
@@ -75,6 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <?php endif; ?>
 
     <form action="edit_profile.php" method="POST" enctype="multipart/form-data">
+        <h2>Profile Settings</h2>
         <div class="form-group">
             <label for="name">Name</label>
             <input type="text" name="name" id="name" value="<?php echo htmlspecialchars($user['name']); ?>" required>
@@ -83,6 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="form-group">
             <label for="email">Email</label>
             <input type="email" name="email" id="email" placeholder="Optional..." value="<?php echo htmlspecialchars($user['email']); ?>">
+            <button type='button' id='email-verify'>Verify...</button>
         </div>
 
         <div class="form-group">
@@ -108,11 +111,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
             <button type="button" id="cropButton-banner" style="display: none; margin-top: 20px;">Upload...</button>
         </div>
-
-        <div class="form-group-checkbox">
+        <br>
+        <h2> Account Options</h2>
+        <!--<div class="form-group-checkbox">
             <label for="email_visible" class="inline-label" title='Only Visible to Verified Users'>Show Email on Profile</label>
             <input type="checkbox" name="email_visible" id="email_visible" value="1" <?php echo $user['email_visible'] == 1 ? 'checked' : ''; ?>>
-        </div>
+        </div>!-->
 
         <div class="form-group-checkbox">
             <label for="dark_mode" class="inline-label">Toggle Dark Mode</label>

@@ -28,7 +28,6 @@ if ($stmt) {
     <title>Forums | <?php echo $site_name?></title>
     
     <link rel="stylesheet" href="<?php echo $stylesheet ?>">
-    <link rel="stylesheet" href="/style/header.css">
     <link rel="stylesheet" href="/style/forums.css">
 </head>
 <body>

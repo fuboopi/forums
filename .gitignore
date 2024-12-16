@@ -8,7 +8,6 @@ vendor/
 logs/
 .well-known/
 
-
 websocket-server/certificate.pem
 websocket-server/private-key.pem
 websocket-server/server.js
