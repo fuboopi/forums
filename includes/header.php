@@ -2,9 +2,9 @@
     <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/style/header.css">
-  <link href="/fonts/fontawesome/css/fontawesome.css" rel="stylesheet" />
-  <link href="/fonts/fontawesome/css/brands.css" rel="stylesheet" />
-  <link href="/fonts/fontawesome/css/solid.css" rel="stylesheet" />
+  <link href="/node_modules/@fortawesome/fontawesome-free/css/fontawesome.css" rel="stylesheet" />
+  <link href="/node_modules/@fortawesome/fontawesome-free/css/brands.css" rel="stylesheet" />
+  <link href="/node_modules/@fortawesome/fontawesome-free/css/solid.css" rel="stylesheet" />
     </head>
 </html>
 

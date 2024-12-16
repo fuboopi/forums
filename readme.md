@@ -13,6 +13,9 @@ A messy, but functioning (hopefully) forums site
     - [Database setup](#database-setup)
         - [Creating a user](#creating-a-user)
         - [Creating the database](#creating-the-database)
+    - [Installing dependencies](#installing-dependencies)
+    - [Creating the CDN](#creating-the-cdn)
+        - [Setting permissions](#setting-permissions)
     - [Setting up configuration files](#setting-up-configuration-files)
         - [config.php](#configphp)
         - [db_config.php](#db_configphp)
@@ -96,7 +99,7 @@ server {
 ```
 
 ### Database setup
-It's recommended to create a dedicated MySQL user just to limit privileges. 
+It's recommended to create a dedicated MySQL user just to limit privileges to this database only for stuff such as security.
 
 #### Creating a user
 Login to your MySQL shell and create a new user.
@@ -104,7 +107,7 @@ Login to your MySQL shell and create a new user.
 CREATE USER 'forums'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
 GRANT CREATE, ALTER, DROP, INSERT, UPDATE, DELETE, SELECT, REFERENCES ON forums.* TO 'forums'@'localhost';
 ```
-Log back out with `exit;` to return to your shell.
+Exit the MySQL shell with `exit;`.
 
 
 #### Creating the database
@@ -113,7 +116,7 @@ Making sure your current working directory is still the root of the project, cre
 $ mysql -u forums -pPassword forums < setup/database.sql
 ```
 #### Note
-> There should be no space between `-p` and your password.
+> There should be **no** space between `-p` and your password.
 
 You can verify if the database was made by logging into MySQL and running:
 ```sql
@@ -138,19 +141,35 @@ You should get an output like:
 #### Note
 > This may change in the future as things get added or removed.
 
+### Installing Dependencies
+This project only requires a few dependencies to be installed through npm. Simply run `npm install` to install them.
+
+### Creating the CDN
+The CDN (Content Delivery Network) is mainly just used to storing user uploaded files. There are a few approaches to this.
+- **Option 1:** Either create a new directory in the root of this project.
+- **Option 2:** Create it on a different storage medium and use a symbolic link to point it from a directory in the root of this project.
+
+The structure of the CDN should look as such:
+```
+/CDN
+└──forums
+   ├──profile_banners
+   ├──profile_pictures
+   └──uploads
+```
+#### Setting permissions
+In order for PHP to write files to the CDN, you need to ensure the permisssions are set correctly (this drove me crazy lol). Usually, www-data is the user PHP uses for uploads. Recursively change the owner and permissions for the CDN directory.
+```sh
+sudo chown -R www-data:www-data CDN
+sudo chmod -R 775 CDN
+```
+
 ### Setting up configuration files
 Two main files that will have to be setup are in the `setup/` directory, `config.php` and `db_config.php`.
 
 #### config.php
 The only variables that you will need to change are `$site`, `$site_name`, `$cdnDIR` and `$cdn`. `$token_name` should not be changed unless a different column name is being used.
 ```php
-// Setup MySQL Database in ./db_config.php
-$dbConfig = require 'db_config.php';
-define("DB_SERVER", $dbConfig['server']);
-define("DB_USERNAME", $dbConfig['username']);
-define("DB_PASSWORD", $dbConfig['password']);
-define("DB_NAME", $dbConfig['name']);
-
 // Variables
 $site = "https://example.com";
 $site_name = "forum site";
@@ -159,15 +178,14 @@ define("ROOTPATH", __DIR__);
 $cdnDIR = '/CDN/forums';
 $cdn = "https://cdn.example.com";
 
-// variables that u probably dont need to change lol
+// Variables that most likely don't need to be changed.
 $token_name = 'remember_me';
-
-// ------------------------------------------------------------------
 ```
+`$cdn` Can either be a subdomain, or just a directory within the same domain.
 
 
 #### db_config.php
-`db_config.php` contains the credentials required to connect to your MySQL database.
+`db_config.php` contains the credentials required to connect to your MySQL database. Set it accordingly to your current setup.
 ```php
 return [
     'server' => 'localhost',

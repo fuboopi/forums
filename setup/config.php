@@ -17,7 +17,7 @@ define("ROOTPATH", __DIR__);
 $cdnDIR = '/CDN/forums';
 $cdn = "https://cdn.fuboopi.com/forums";
 
-// variables that u probably dont need to change lol
+// Variables that most likely don't need to be changed.
 $token_name = 'remember_me';
 
 // ------------------------------------------------------------------
