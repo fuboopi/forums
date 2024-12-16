@@ -20,12 +20,12 @@ A messy, but functioning (hopefully) forums site
 
 ## To Do
 - [x] Post/forums Actions
-- [] Finish DMs
-- [] Notifications/Recent Activity Page
-- [] Expand on search functionality
-- [] Finish this readme
+- [ ] Finish DMs
+- [ ] Notifications/Recent Activity Page
+- [ ] Expand on search functionality
+- [ ] Finish this readme
 
-### Requirements:
+## Requirements:
 - Nginx, Apache, etc...
 - PHP-FPM
 - MySQL, MariaDB, etc...
@@ -115,6 +115,28 @@ $ mysql -u forums -pPassword forums < setup/database.sql
 #### Note
 > There should be no space between `-p` and your password.
 
+You can verify if the database was made by logging into MySQL and running:
+```sql
+USE forums;
+SHOW TABLES;
+```
+You should get an output like:
+```sql
++-------------------+
+| Tables_in_forums  |
++-------------------+
+| conversations     |
+| follows           |
+| forum_posts       |
+| forum_posts_votes |
+| forums            |
+| messages          |
+| users             |
++-------------------+
+7 rows in set (0.00 sec)
+```
+#### Note
+> This may change in the future as things get added or removed.
 
 ### Setting up configuration files
 Two main files that will have to be setup are in the `setup/` directory, `config.php` and `db_config.php`.
